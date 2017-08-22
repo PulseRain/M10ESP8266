@@ -33,13 +33,13 @@ typedef enum esp8266_command_type {
 
 
 typedef struct {
-   int16_t (*resetESP8266)();
+   int16_t (*resetESP8266)() __reentrant;
    uint16_t (*commandResponse) (uint8_t* cmd, enum esp8266_command_type type, uint8_t* params) __reentrant;
    void (*sendCommand)(uint8_t* cmd, enum esp8266_command_type type, uint8_t* params) __reentrant;
    uint16_t (*readForResponse)(uint8_t* rsp, uint16_t timeout) __reentrant;
-   uint16_t (*setMux)(uint8_t mux);
-   int16_t (*configureTCPServer)(uint8_t* params);
-   void (*clearBuffer)();
+   uint16_t (*setMux)(uint8_t mux) __reentrant;
+   int16_t (*configureTCPServer)(uint8_t* params) __reentrant;
+   void (*clearBuffer)() __reentrant;
 } ESP8266_STRUCT;
 
 extern const ESP8266_STRUCT ESP8266;

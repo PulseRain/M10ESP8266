@@ -39,7 +39,7 @@ uint8_t esp8266bufferHead; // Holds position of latest byte placed in buffer.
 //      function to fill zero to esp8266RxBuffer
 //----------------------------------------------------------------------------
 
-static void clearBuffer()
+static void clearBuffer() __reentrant
 {
   uint8_t i;
 
@@ -67,7 +67,7 @@ static void clearBuffer()
 // Remarks:
 //      function to match string against the end of esp8266RxBuffer
 //----------------------------------------------------------------------------
-static int8_t bufferStrMatch (uint8_t* pStr)
+static int8_t bufferStrMatch (uint8_t* pStr) __reentrant
 {
   uint8_t t, i;
 
@@ -197,7 +197,7 @@ static uint16_t commandResponse (uint8_t* cmd, enum esp8266_command_type type, u
 // Remarks:
 //      function to enable / disable multiple connections.
 //----------------------------------------------------------------------------
-uint16_t setMux(uint8_t mux)
+uint16_t setMux(uint8_t mux) __reentrant
 {
   char params[2] = {0, 0};
   params[0] = (mux > 0) ? '1' : '0';
@@ -220,7 +220,7 @@ uint16_t setMux(uint8_t mux)
 //      function to create / delete server.
 //----------------------------------------------------------------------------
 
-int16_t configureTCPServer(uint8_t* params)
+int16_t configureTCPServer(uint8_t* params) __reentrant
 {
     return commandResponse(ESP8266_SERVER_CONFIG, ESP8266_CMD_SETUP, params);
 } // End of configureTCPServer()
@@ -239,7 +239,7 @@ int16_t configureTCPServer(uint8_t* params)
 //      function to create / delete server.
 //----------------------------------------------------------------------------
 
-int16_t resetESP8266()
+int16_t resetESP8266() __reentrant
 {
     return commandResponse (ESP8266_RESET, ESP8266_CMD_EXECUTE, 0);
 } // End of resetESP8266()
